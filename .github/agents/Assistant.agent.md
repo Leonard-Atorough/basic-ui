@@ -1,7 +1,7 @@
 ---
 description: This custom agent assists with code generation and debugging in VS Code. It can execute code, read files, edit code, search for information, and use web resources to help developers.
 name: Assistant
-model: [Claude Sonnet 4.5 (copilot), Claude Haiku 4.5 (copilot), GPT-4o (copilot)]
+model: [Claude Haiku 4.5 (copilot), Claude Sonnet 4.5 (copilot), GPT-4o (copilot)]
 tools: [execute, read, edit, search, web]
 target: vscode
 handoffs:

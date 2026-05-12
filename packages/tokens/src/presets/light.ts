@@ -118,7 +118,7 @@ export const lightTheme: ThemeConfig = {
     toast: 50,
     tooltip: 50,
   },
-  container: {
+  breakpoint: {
     sm: "28rem",
     md: "42rem",
     lg: "64rem",

@@ -43,7 +43,7 @@ export function createTheme(config: ThemeInput): void {
     duration: "duration",
     easing: "ease",
     zIndex: "z",
-    container: "container",
+    breakpoint: "breakpoint",
     opacity: "opacity",
   };
 

@@ -199,13 +199,13 @@ export default {
       outlineOffset: {
         ring: "var(--ring-offset)",
       },
-      /* Container query breakpoints */
-      containers: {
-        sm: "var(--container-sm)",
-        md: "var(--container-md)",
-        lg: "var(--container-lg)",
-        xl: "var(--container-xl)",
-        max: "var(--container-max)",
+      /* Breakpoint query breakpoints */
+      breakpoints: {
+        sm: "var(--breakpoint-sm)",
+        md: "var(--breakpoint-md)",
+        lg: "var(--breakpoint-lg)",
+        xl: "var(--breakpoint-xl)",
+        max: "var(--breakpoint-max)",
       },
       /* Opacity tokens */
       opacity: {

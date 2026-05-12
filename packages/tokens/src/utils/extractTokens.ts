@@ -21,7 +21,7 @@ export function extractTokens(
     duration: "duration",
     easing: "easing",
     zIndex: "z-index",
-    container: "container",
+    breakpoint: "breakpoint",
     opacity: "opacity",
   };
 

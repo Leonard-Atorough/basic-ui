@@ -21,11 +21,13 @@ export type {
 } from "./types";
 
 // Core functions
-export { createTheme } from "./createTheme";
+import { createTheme } from "./createTheme";
+export { createTheme };
 export type { ThemeInput } from "./createTheme";
 
 // Presets & Themes
-export { lightTheme, darkTheme } from "./presets";
+import { lightTheme, darkTheme } from "./presets";
+export { lightTheme, darkTheme };
 
 // Utilities
 export { mergeTheme, extractTokens, tokenName, cssVar } from "./utils";
@@ -33,3 +35,7 @@ export { mergeTheme, extractTokens, tokenName, cssVar } from "./utils";
 // Tailwind integration
 export { default as preset } from "./tailwind/preset";
 
+// Auto-initialize light theme on module load (browser environment only)
+if (typeof document !== "undefined") {
+  createTheme({ light: lightTheme });
+}

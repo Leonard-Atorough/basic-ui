@@ -107,12 +107,12 @@
   --z-toast: 50;
   --z-tooltip: 50;
 
-  /* Container queries */
-  --container-sm: 28rem;
-  --container-md: 42rem;
-  --container-lg: 64rem;
-  --container-xl: 80rem;
-  --container-max: 96rem;
+  /* Breakpoint queries */
+  --breakpoint-sm: 28rem;
+  --breakpoint-md: 42rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-max: 96rem;
 
   /* Opacity */
   --opacity-disabled: 0.5;

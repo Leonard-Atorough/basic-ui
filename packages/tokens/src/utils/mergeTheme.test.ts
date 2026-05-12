@@ -19,7 +19,7 @@ const baseTheme: ThemeConfig = {
   duration: { normal: "200ms", fast: "100ms" },
   easing: { out: "cubic-bezier(0, 0, 0.2, 1)", in: "cubic-bezier(0.4, 0, 1, 1)" },
   zIndex: { modal: 45, dropdown: 40 },
-  container: { md: "42rem", sm: "28rem" },
+  breakpoint: { md: "42rem", sm: "28rem" },
   opacity: { disabled: 0.5 },
 };
 
@@ -35,7 +35,7 @@ describe("mergeTheme", () => {
     ["duration", { duration: { fast: "50ms" } }],
     ["easing", { easing: { in: "ease-in" } }],
     ["zIndex", { zIndex: { modal: 100 } }],
-    ["container", { container: { md: "48rem" } }],
+    ["breakpoint", { breakpoint: { md: "48rem" } }],
     ["opacity", { opacity: { disabled: 0.3 } }],
   ])("merges %s overrides correctly", (_category, override) => {
     const result = mergeTheme(baseTheme, override);

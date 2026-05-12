@@ -117,8 +117,8 @@ describe("createTheme", () => {
     ])("injects %s category", (_category, config, prefix) => {
       createTheme({ dark: config });
       
-      const [category, values] = Object.entries(config)[0];
-      Object.entries(values as any).forEach(([key, value]) => {
+      const [_, values] = Object.entries(config)[0];
+      Object.entries(values as any).forEach(([key, _]) => {
         expect(mockStyleElement.textContent).toContain(
           `--${prefix}-${key}`,
         );
@@ -186,7 +186,7 @@ describe("createTheme", () => {
           duration: { fast: "100ms" },
           easing: { in: "ease-in" },
           zIndex: { modal: 50 },
-          container: { md: "42rem" },
+          breakpoint: { md: "42rem" },
           opacity: { disabled: 0.5 },
         },
       });
@@ -205,7 +205,7 @@ describe("createTheme", () => {
         "duration-fast",
         "ease-in",
         "z-modal",
-        "container-md",
+        "breakpoint-md",
         "opacity-disabled",
       ];
 

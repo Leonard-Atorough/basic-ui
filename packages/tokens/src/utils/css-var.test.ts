@@ -31,8 +31,8 @@ describe("tokenName", () => {
     ["easing", "out", "--ease-out"],
     ["zIndex", "modal", "--z-modal"],
     ["zIndex", "tooltip", "--z-tooltip"],
-    ["container", "md", "--container-md"],
-    ["container", "max", "--container-max"],
+    ["breakpoint", "md", "--breakpoint-md"],
+    ["breakpoint", "max", "--breakpoint-max"],
     ["opacity", "disabled", "--opacity-disabled"],
     ["opacity", "muted", "--opacity-muted"],
   ])("%s:%s → %s", (category, key, expected) => {
@@ -68,7 +68,7 @@ describe("cssVar", () => {
     ["duration", "fast", "var(--duration-fast)"],
     ["easing", "in", "var(--ease-in)"],
     ["zIndex", "modal", "var(--z-modal)"],
-    ["container", "md", "var(--container-md)"],
+    ["breakpoint", "md", "var(--breakpoint-md)"],
     ["opacity", "disabled", "var(--opacity-disabled)"],
   ])("%s:%s → %s", (category, key, expected) => {
     expect(cssVar(category, key)).toBe(expected);

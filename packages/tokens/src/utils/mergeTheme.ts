@@ -18,7 +18,7 @@ export function mergeTheme(base: ThemeConfig, override: Partial<ThemeConfig>): T
     duration: { ...base.duration, ...override.duration },
     easing: { ...base.easing, ...override.easing },
     zIndex: { ...base.zIndex, ...override.zIndex },
-    container: { ...base.container, ...override.container },
+    breakpoint: { ...base.breakpoint, ...override.breakpoint },
     opacity: { ...base.opacity, ...override.opacity },
   };
 }

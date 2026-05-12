@@ -15,7 +15,7 @@ const mockTheme: ThemeConfig = {
   duration: { fast: "100ms", normal: "200ms" },
   easing: { in: "cubic-bezier(0.4, 0, 1, 1)", out: "cubic-bezier(0, 0, 0.2, 1)" },
   zIndex: { modal: 45, tooltip: 50 },
-  container: { sm: "28rem", md: "42rem" },
+  breakpoint: { sm: "28rem", md: "42rem" },
   opacity: { disabled: 0.5, muted: 0.7 },
 };
 
@@ -33,7 +33,7 @@ describe("extractTokens", () => {
     ["duration", "duration", "fast"],
     ["easing", "easing", "in"],
     ["zIndex", "z-index", "modal"],
-    ["container", "container", "sm"],
+    ["breakpoint", "breakpoint", "sm"],
     ["opacity", "opacity", "disabled"],
   ])("category: %s uses %s prefix", (category, prefix, key) => {
     const result = extractTokens(mockTheme, category);

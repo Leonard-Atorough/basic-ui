@@ -72,7 +72,7 @@ export type EasingTokens = "in" | "out" | "spring";
 /** Stacking context (z-index) for overlays */
 export type ZIndexTokens = "dropdown" | "modal" | "toast" | "tooltip";
 
-/** Container query breakpoints */
+/** Breakpoint query breakpoints */
 export type ContainerTokens = "sm" | "md" | "lg" | "xl" | "max";
 
 /** Opacity for disabled/muted states */
@@ -96,6 +96,6 @@ export interface ThemeConfig {
   duration?: Partial<Record<DurationTokens, string>>;
   easing?: Partial<Record<EasingTokens, string>>;
   zIndex?: Partial<Record<ZIndexTokens, number>>;
-  container?: Partial<Record<ContainerTokens, string>>;
+  breakpoint?: Partial<Record<ContainerTokens, string>>;
   opacity?: Partial<Record<OpacityTokens, number | string>>;
 }

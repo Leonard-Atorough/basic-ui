@@ -16,7 +16,7 @@ export function tokenName(category: string, key: string): string {
     duration: "duration",
     easing: "ease",
     zIndex: "z",
-    container: "container",
+    breakpoint: "breakpoint",
     opacity: "opacity",
   };
 

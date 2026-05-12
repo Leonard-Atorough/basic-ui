@@ -1,5 +1,5 @@
 import React from "react";
-import type { ResponsiveValue } from "@core/lib";
+import type { ResponsiveValue } from "@core/hooks";
 
 /**
  * Icon semantic color variants aligned with design tokens

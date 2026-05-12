@@ -26,11 +26,32 @@ basic-ui/
 
 ## Quick Start
 
+### Prerequisites
+
+- **Node.js** >= 18
+- **Package Manager** (any of the following):
+  - **pnpm** >= 9 (recommended for monorepo speed)
+  - **npm** >= 9
+  - **yarn** >= 3.6
+
 ### Install Dependencies
 
+**With pnpm (recommended):**
 ```bash
 pnpm install
 ```
+
+**With npm:**
+```bash
+npm install
+```
+
+**With yarn:**
+```bash
+yarn install
+```
+
+> **Note**: We use Turbo for task orchestration, which works identically across all package managers.
 
 ### Development
 
@@ -45,6 +66,8 @@ Run type checking:
 ```bash
 pnpm type-check
 ```
+
+> **Package Manager:** Replace `pnpm` with `npm run` or `yarn` if using npm/yarn (e.g., `npm run storybook`). See [PACKAGE_MANAGERS.md](./PACKAGE_MANAGERS.md) for detailed comparison and setup guidance.
 
 ### Build
 

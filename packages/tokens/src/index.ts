@@ -36,7 +36,7 @@ export { PREFIX_MAP } from "./constants";
 // Tailwind integration
 export { default as preset } from "./tailwind/preset";
 
-// Auto-initialize light theme on module load (browser environment only)
+// Auto-initialize light and dark themes on module load (browser environment only)
 if (typeof document !== "undefined") {
-  createTheme({ light: lightTheme });
+  createTheme({ light: lightTheme, dark: darkTheme });
 }

@@ -19,6 +19,10 @@
     "./theme": {
       "import": "./dist/theme/index.js",
       "types": "./dist/theme/index.d.ts"
+    },
+    "./tailwind": {
+      "import": "./dist/tailwind/preset.js",
+      "types": "./dist/tailwind/preset.d.ts"
     }
   },
   "files": [

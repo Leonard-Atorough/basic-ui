@@ -4,10 +4,21 @@ import path from 'path';
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
-      name: 'BasicUITokens',
-      fileName: 'index',
+      entry: {
+        index: path.resolve(__dirname, 'src/index.ts'),
+        tailwind: path.resolve(__dirname, 'src/tailwind/preset.entry.ts'),
+      },
       formats: ['es'],
+    },
+    rollupOptions: {
+      output: {
+        entryFileNames: (chunkInfo) => {
+          if (chunkInfo.name === 'tailwind') {
+            return 'tailwind/preset.js';
+          }
+          return '[name].js';
+        },
+      },
     },
     copyPublicDir: true,
     minify: 'esbuild',

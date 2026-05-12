@@ -1,4 +1,4 @@
-// Tokens package — Complete token system with themes, utilities, and Tailwind preset
+// Tokens package — Complete token system with themes and utilities
 export const version = "0.0.1";
 
 // Types
@@ -32,9 +32,6 @@ export { lightTheme, darkTheme };
 // Utilities
 export { mergeTheme, extractTokens, tokenName, cssVar } from "./utils";
 export { PREFIX_MAP } from "./constants";
-
-// Tailwind integration
-export { default as preset } from "./tailwind/preset";
 
 // Auto-initialize light and dark themes on module load (browser environment only)
 if (typeof document !== "undefined") {

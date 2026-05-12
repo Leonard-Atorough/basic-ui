@@ -1,6 +1,6 @@
 import { mergeTheme, ThemeConfig } from ".";
 import { lightTheme, darkTheme } from "./presets";
-import { tokenName } from "./utils";
+import { themeToCustomProperties } from "./utils";
 
 /**
  * Theme configuration for light and dark modes.
@@ -33,12 +33,9 @@ export function createTheme(config: ThemeInput): void {
 
   // Helper to inject theme to a target element
   const injectTheme = (theme: ThemeConfig, target: HTMLElement = root) => {
-    Object.entries(theme).forEach(([category, values]) => {
-      if (values) {
-        Object.entries(values).forEach(([key, value]) => {
-          target.style.setProperty(tokenName(category, key), String(value));
-        });
-      }
+    const props = themeToCustomProperties(theme);
+    Object.entries(props).forEach(([varName, value]) => {
+      target.style.setProperty(varName, String(value));
     });
   };
 
@@ -67,13 +64,10 @@ function injectDarkThemeStyles(theme: ThemeConfig): void {
   }
 
   // Create CSS rules for :root.dark
+  const props = themeToCustomProperties(theme);
   let darkCSS = ":root.dark {\n";
-  Object.entries(theme).forEach(([category, values]) => {
-    if (values) {
-      Object.entries(values).forEach(([key, value]) => {
-        darkCSS += `  ${tokenName(category, key)}: ${String(value)};\n`;
-      });
-    }
+  Object.entries(props).forEach(([varName, value]) => {
+    darkCSS += `  ${varName}: ${String(value)};\n`;
   });
   darkCSS += "}";
 

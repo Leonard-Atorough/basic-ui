@@ -25,9 +25,9 @@ describe("extractTokens", () => {
     ["spacing", "spacing", "xs"],
     ["radius", "radius", "sm"],
     ["shadows", "shadow", "sm"],
-    ["fontSize", "font-size", "xs"],
+    ["fontSize", "text", "xs"],
     ["fontWeight", "font-weight", "normal"],
-    ["lineHeight", "line-height", "tight"],
+    ["lineHeight", "leading", "tight"],
     ["letterSpacing", "tracking", "tight"],
     ["fontFamily", "font", "sans"],
     ["duration", "duration", "fast"],
@@ -59,7 +59,7 @@ describe("extractTokens", () => {
 
   it("handles decimal values correctly", () => {
     const result = extractTokens(mockTheme, "lineHeight");
-    expect(typeof result["line-height-tight"]).toBe("number");
-    expect(result["line-height-tight"]).toBe(1.15);
+    expect(typeof result["leading-tight"]).toBe("number");
+    expect(result["leading-tight"]).toBe(1.15);
   });
 });

@@ -11,30 +11,24 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./css": "./dist/tokens.css",
+    "./styles/theme.css": "./dist/styles/theme.css",
     "./presets": {
       "import": "./dist/presets/index.js",
       "types": "./dist/presets/index.d.ts"
-    },
-    "./theme": {
-      "import": "./dist/theme/index.js",
-      "types": "./dist/theme/index.d.ts"
-    },
-    "./tailwind": {
-      "import": "./dist/tailwind/preset.js",
-      "types": "./dist/tailwind/preset.d.ts"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "vite build",
+    "generate": "tsx scripts/generate-theme-css.ts",
+    "build": "pnpm generate && vite build",
     "preview": "vite preview",
     "test": "vitest",
     "test:watch": "vitest --watch"
   },
   "devDependencies": {
+    "tsx": "^4.21.0",
     "typescript": "^5.9.0",
     "vite": "^6.1.0"
   }

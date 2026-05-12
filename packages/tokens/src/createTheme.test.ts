@@ -43,7 +43,7 @@ describe("createTheme", () => {
         const varName = category === "colors" ? `--color-${key}` :
                        category === "spacing" ? `--spacing-${key}` :
                        category === "radius" ? `--radius-${key}` :
-                       category === "fontSize" ? `--font-size-${key}` :
+                       category === "fontSize" ? `--text-${key}` :
                        category === "fontWeight" ? `--font-weight-${key}` :
                        category === "zIndex" ? `--z-${key}` : `--${category}-${key}`;
         expect(mockRoot.style.setProperty).toHaveBeenCalledWith(
@@ -197,9 +197,9 @@ describe("createTheme", () => {
         "spacing-md",
         "radius-sm",
         "shadow-md",
-        "font-size-md",
+        "text-md",
         "font-weight-bold",
-        "line-height-normal",
+        "leading-normal",
         "tracking-normal",
         "font-sans",
         "duration-fast",

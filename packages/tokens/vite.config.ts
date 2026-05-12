@@ -1,26 +1,34 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import path from 'path';
+import { copyFileSync, mkdirSync } from 'node:fs';
+
+const copyThemeCss = (): Plugin => ({
+  name: 'copy-theme-css',
+  closeBundle() {
+    const destDir = path.resolve(__dirname, 'dist/styles');
+    mkdirSync(destDir, { recursive: true });
+    copyFileSync(
+      path.resolve(__dirname, 'src/styles/theme.css'),
+      path.resolve(destDir, 'theme.css'),
+    );
+  },
+});
 
 export default defineConfig({
+  plugins: [copyThemeCss()],
   build: {
     lib: {
       entry: {
         index: path.resolve(__dirname, 'src/index.ts'),
-        tailwind: path.resolve(__dirname, 'src/tailwind/preset.entry.ts'),
       },
       formats: ['es'],
     },
     rollupOptions: {
       output: {
-        entryFileNames: (chunkInfo) => {
-          if (chunkInfo.name === 'tailwind') {
-            return 'tailwind/preset.js';
-          }
-          return '[name].js';
-        },
+        entryFileNames: '[name].js',
       },
     },
-    copyPublicDir: true,
+    copyPublicDir: false,
     minify: 'esbuild',
     sourcemap: true,
   },

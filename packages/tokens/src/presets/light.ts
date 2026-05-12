@@ -2,7 +2,7 @@ import type { ThemeConfig } from "../types";
 
 /**
  * Light theme preset
- * Default theme for light mode (same as defaultTheme)
+ * Default theme for light mode - used as base for light mode customizations
  */
 export const lightTheme: ThemeConfig = {
   colors: {

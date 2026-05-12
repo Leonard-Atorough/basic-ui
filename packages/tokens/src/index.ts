@@ -22,10 +22,10 @@ export type {
 
 // Core functions
 export { createTheme } from "./createTheme";
+export type { ThemeInput } from "./createTheme";
 
 // Presets & Themes
 export { lightTheme, darkTheme } from "./presets";
-export { defaultTheme } from "./config/default";
 
 // Utilities
 export { mergeTheme, extractTokens, tokenName, cssVar } from "./utils";

@@ -1,12 +1,8 @@
-
 /**
  * Generate a CSS custom property name from category and key
  * @example tokenName("color", "primary") → "--color-primary"
  */
-export function tokenName(
-  category: string,
-  key: string,
-): string {
+export function tokenName(category: string, key: string): string {
   const prefixMap: Record<string, string> = {
     colors: "color",
     spacing: "spacing",
@@ -32,10 +28,7 @@ export function tokenName(
  * Generate a CSS variable reference from category and key
  * @example cssVar("color", "primary") → "var(--color-primary)"
  */
-export function cssVar(
-  category: string,
-  key: string,
-): string {
+export function cssVar(category: string, key: string): string {
   return `var(${tokenName(category, key)})`;
 }
 
@@ -44,5 +37,9 @@ export function cssVar(
  * @internal
  */
 export function convertToKebabCase(str: string): string {
-  return str.replace(/([A-Z])/g, "-$1").toLowerCase();
+  return str
+    .replace(/([a-z0-9])([A-Z])/g, "$1-$2") // insert hyphen between lowercase and uppercase
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2") // insert hyphen between consecutive uppercase followed by lowercase
+    .toLowerCase()
+    .replace(/^-/, ""); // remove leading hyphen if it exists
 }

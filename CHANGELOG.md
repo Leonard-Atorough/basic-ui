@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Added `@testing-library/user-event` dependency for improved user interaction testing.
 - Added this changelog file to track changes in the project.
+- Added `Assistant.agent.md` file for documenting the assistant agent's capabilities and usage.
 
 ### Changed
 - Updated pagination icons to use `Icon` component with `ChevronLeftIcon` and `ChevronRightIcon`.

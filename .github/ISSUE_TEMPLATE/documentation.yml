@@ -1,4 +1,4 @@
-name: 📚 Documentation Issue
+name: Documentation Issue
 description: Report missing, unclear, or outdated documentation
 labels: ['documentation', 'triage']
 assignees: []
@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Help us improve simple-ui documentation! 📖
+        Help us improve simple-ui documentation!
         Tell us what documentation is missing or needs improvement.
 
   - type: dropdown

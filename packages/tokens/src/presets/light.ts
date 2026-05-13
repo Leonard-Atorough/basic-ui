@@ -44,46 +44,36 @@ export const lightTheme: ThemeConfig = {
     "neutral-900": "hsl(210 18% 8%)",
 
     // ===== SEMANTIC: LIGHT MODE BACKGROUNDS & SURFACES =====
-    "color-background-primary": "var(--neutral-50)",
-    "color-background-secondary": "var(--neutral-100)",
-    "color-background-muted": "var(--neutral-100)",
-    "color-surface": "var(--neutral-50)",
-    "color-surface-hover": "var(--neutral-50)",
-    "color-surface-active": "var(--neutral-100)",
+    "background-primary": "var(--color-neutral-50)",
+    "background-secondary": "var(--color-neutral-100)",
+    "background-muted": "var(--color-neutral-100)",
+    "surface": "var(--color-neutral-50)",
+    "surface-hover": "var(--color-neutral-50)",
+    "surface-active": "var(--color-neutral-100)",
 
-    // ===== SEMANTIC: PRIMARY & SECONDARY =====
-    "color-primary": "var(--primary-500)", // green-500
-    "color-primary-hover": "var(--primary-600)", // green-600
-    "color-primary-active": "var(--primary-700)", // green-700
-    "color-primary-light": "var(--primary-50)", // green-50
-    "color-secondary": "var(--secondary-500)", // purple-500
-    "color-secondary-hover": "var(--secondary-600)", // purple-600
-    "color-secondary-active": "var(--secondary-700)", // purple-700
-    "color-secondary-light": "var(--secondary-50)", // purple-50
 
     // ===== SEMANTIC: TEXT =====
-    "color-text-primary": "var(--neutral-900)", // gray-900
-    "color-text-secondary": "var(--neutral-700)", // gray-700
-    "color-text-muted": "var(--neutral-500)", // gray-500
-    "color-text-link": "var(--primary-700)", // green-700
-    "color-text-feedback": "var(--neutral-50)",
+    "foreground-primary": "var(--color-neutral-900)", // gray-900
+    "foreground-secondary": "var(--color-neutral-700)", // gray-700
+    "foreground-muted": "var(--color-neutral-500)", // gray-500
+    "foreground-link": "var(--color-primary-700)", // green-700
 
     // ===== SEMANTIC: BORDERS =====
-    "color-border": "var(--neutral-200)", // gray-200
-    "color-border-muted": "var(--neutral-100)", // gray-100
+    "border": "var(--color-neutral-200)", // gray-200
+    "border-muted": "var(--color-neutral-100)", // gray-100
 
     // ===== SEMANTIC: FEEDBACK COLORS =====
-    "color-success": "var(--color-green-500)", // green-500
-    "color-success-light": "var(--color-green-300)", // green-300
-    "color-warning": "var(--color-yellow-500)", // yellow-500
-    "color-warning-light": "var(--color-yellow-300)", // yellow-300
-    "color-error": "var(--color-red-500)", // red-500
-    "color-error-light": "var(--color-red-300)", // red-300
-    "color-info": "var(--color-blue-500)", // blue-500
-    "color-info-light": "var(--color-blue-300)", // blue-300
+    "success": "var(--color-green-500)", // green-500
+    "success-light": "var(--color-green-300)", // green-300
+    "warning": "var(--color-yellow-500)", // yellow-500
+    "warning-light": "var(--color-yellow-300)", // yellow-300
+    "error": "var(--color-red-500)", // red-500
+    "error-light": "var(--color-red-300)", // red-300
+    "info": "var(--color-blue-500)", // blue-500
+    "info-light": "var(--color-blue-300)", // blue-300
 
     // ===== SEMANTIC: SKELETON =====
-    "color-skeleton": "var(--neutral-200)", // gray-200
+    "skeleton": "var(--color-neutral-200)", // gray-200
   },
   spacing: {
     xs: "0.25rem",

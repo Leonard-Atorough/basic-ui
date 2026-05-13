@@ -3,7 +3,7 @@ import { extractTokens } from "./extractTokens";
 import type { ThemeConfig } from "../types";
 
 const mockTheme: ThemeConfig = {
-  color: { "color-background-primary": "hsl(210 20% 97%)", "color-primary": "hsl(119 43% 52%)" },
+  color: { "background-primary": "hsl(210 20% 97%)", "primary-50": "hsl(119 43% 52%)" },
   spacing: { xs: "0.25rem", md: "1rem", lg: "1.5rem" },
   radius: { sm: "0.25rem", md: "0.375rem", lg: "0.5rem" },
   shadow: { s1: "0 1px 2px 0 rgb(0 0 0 / 0.05)", s2: "0 1px 3px 0 rgb(0 0 0 / 0.1)" },
@@ -27,7 +27,7 @@ describe("extractTokens", () => {
       string, // key
     ]
   >([
-    ["color", "color", "color-background-primary"],
+    ["color", "color", "background-primary"],
     ["spacing", "spacing", "xs"],
     ["radius", "radius", "sm"],
     ["shadow", "shadow", "s1"],

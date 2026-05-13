@@ -1,5 +1,5 @@
 import { ThemeConfig } from "../types";
-import { convertToKebabCase } from "./css-var";
+import { convertToKebabCase } from "./utils";
 import { PREFIX_MAP } from "../constants";
 
 /**

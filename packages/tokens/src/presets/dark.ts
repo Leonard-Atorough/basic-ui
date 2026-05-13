@@ -12,46 +12,35 @@ export const darkTheme: ThemeConfig = {
     ...lightTheme.color,
 
     // ===== SEMANTIC: DARK MODE BACKGROUNDS & SURFACES =====
-    "color-background-primary": "var(--neutral-900)", // gray-900
-    "color-background-secondary": "var(--neutral-800)", // gray-800
-    "color-background-muted": "var(--neutral-800)", // gray-800
-    "color-surface": "hsl(210 15% 12%)",
-    "color-surface-hover": "hsl(210 15% 16%)",
-    "color-surface-active": "hsl(210 15% 20%)",
-
-    // ===== SEMANTIC: PRIMARY & SECONDARY (LIGHTENED FOR CONTRAST) =====
-    "color-primary": "var(--primary-400)", // green-400
-    "color-primary-hover": "var(--primary-300)", // green-300
-    "color-primary-active": "var(--primary-500)", // green-500
-    "color-primary-light": "var(--primary-900)", // green-900
-    "color-secondary": "var(--secondary-300)", // purple-300
-    "color-secondary-hover": "var(--secondary-200)", // purple-200
-    "color-secondary-active": "var(--secondary-100)", // purple-100
-    "color-secondary-light": "var(--secondary-700)", // purple-700
+    "background-primary": "var(--color-neutral-900)", // gray-900
+    "background-secondary": "var(--color-neutral-800)", // gray-800
+    "background-muted": "var(--color-neutral-800)", // gray-800
+    "surface": "hsl(210 15% 12%)",
+    "surface-hover": "hsl(210 15% 16%)",
+    "surface-active": "hsl(210 15% 20%)",
 
     // ===== SEMANTIC: TEXT =====
-    "color-text-primary": "var(--neutral-100)", // gray-100
-    "color-text-secondary": "var(--neutral-300)", // gray-300
-    "color-text-muted": "var(--neutral-400)", // gray-400
-    "color-text-link": "var(--green-900)", // green-900
-    "color-text-feedback": "var(--neutral-200)", // gray-200
+    "foreground-primary": "var(--color-neutral-100)", // gray-100
+    "foreground-secondary": "var(--color-neutral-300)", // gray-300
+    "foreground-muted": "var(--color-neutral-400)", // gray-400
+    "foreground-link": "var(--color-green-900)", // green-900
 
     // ===== SEMANTIC: BORDERS =====
-    "color-border": "var(--neutral-700)", // gray-700
-    "color-border-muted": "var(--neutral-800)", // gray-800
+    "border": "var(--color-neutral-700)", // gray-700
+    "border-muted": "var(--color-neutral-800)", // gray-800
 
     // ===== SEMANTIC: FEEDBACK COLORS =====
-    "color-success": "var(--color-green-400)", // green-400
-    "color-success-light": "var(--color-green-900)", // green-900
-    "color-warning": "var(--color-yellow-400)",
-    "color-warning-light": "var(--color-yellow-900)",
-    "color-error": "var(--color-red-400)",
-    "color-error-light": "var(--color-red-900)",
-    "color-info": "var(--color-blue-400)",
-    "color-info-light": "var(--color-blue-900)",
+    "success": "var(--color-green-400)", // green-400
+    "success-light": "var(--color-green-900)", // green-900
+    "warning": "var(--color-yellow-400)",
+    "warning-light": "var(--color-yellow-900)",
+    "error": "var(--color-red-400)",
+    "error-light": "var(--color-red-900)",
+    "info": "var(--color-blue-400)",
+    "info-light": "var(--color-blue-900)",
 
     // ===== SEMANTIC: SKELETON =====
-    "color-skeleton": "var(--neutral-700)", // gray-700
+    "skeleton": "var(--color-neutral-700)", // gray-700
   },
 
   // ===== DARK MODE SHADOWS =====

@@ -44,41 +44,31 @@ export type SemanticColorTokens =
   | "neutral-800"
   | "neutral-900"
   // Semantic: Backgrounds & surfaces
-  | "color-background-primary"
-  | "color-background-secondary"
-  | "color-background-muted"
-  | "color-surface"
-  | "color-surface-hover"
-  | "color-surface-active"
-  // Semantic: Primary & Secondary
-  | "color-primary"
-  | "color-primary-hover"
-  | "color-primary-active"
-  | "color-primary-light"
-  | "color-secondary"
-  | "color-secondary-hover"
-  | "color-secondary-active"
-  | "color-secondary-light"
-  // Semantic: Text
-  | "color-text-primary"
-  | "color-text-secondary"
-  | "color-text-muted"
-  | "color-text-link"
-  | "color-text-feedback"
+  | "background-primary"
+  | "background-secondary"
+  | "background-muted"
+  | "surface"
+  | "surface-hover"
+  | "surface-active"
+  // Semantic: Text/foreground
+  | "foreground-primary"
+  | "foreground-secondary"
+  | "foreground-muted"
+  | "foreground-link"
   // Semantic: Borders
-  | "color-border"
-  | "color-border-muted"
+  | "border"
+  | "border-muted"
   // Semantic: Feedback colors
-  | "color-success"
-  | "color-success-light"
-  | "color-warning"
-  | "color-warning-light"
-  | "color-error"
-  | "color-error-light"
-  | "color-info"
-  | "color-info-light"
+  | "success"
+  | "success-light"
+  | "warning"
+  | "warning-light"
+  | "error"
+  | "error-light"
+  | "info"
+  | "info-light"
   // Semantic: Skeleton & Loading
-  | "color-skeleton";
+  | "skeleton";
 
 /** Spacing scale: xs (4px) to 5xl (64px) */
 export type SpacingTokens = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";

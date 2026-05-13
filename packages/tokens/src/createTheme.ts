@@ -1,6 +1,6 @@
-import { mergeTheme, ThemeConfig } from ".";
+import { ThemeConfig } from "./types";
 import { lightTheme, darkTheme } from "./presets";
-import { themeToCustomProperties } from "./utils";
+import { themeToCustomProperties, mergeTheme } from "./utils";
 
 /**
  * Theme configuration for light and dark modes.

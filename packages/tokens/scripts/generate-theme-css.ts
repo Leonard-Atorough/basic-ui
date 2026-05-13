@@ -6,9 +6,9 @@
  * packages/tokens/src/styles/theme.css — the single CSS source of truth.
  */
 
-import { lightTheme } from "../src/presets/light.js";
-import { darkTheme } from "../src/presets/dark.js";
-import { themeToCustomProperties } from "../src/utils/themeToCustomProperties.js";
+import { lightTheme } from "../src/presets/light.ts";
+import { darkTheme } from "../src/presets/dark.ts";
+import { themeToCustomProperties } from "../src/utils/themeToCustomProperties.ts";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { resolve, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";

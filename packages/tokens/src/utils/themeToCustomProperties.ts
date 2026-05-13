@@ -15,9 +15,7 @@ import { PREFIX_MAP } from "../constants";
  * //   "--spacing-md": "1rem",
  * // }
  */
-export function themeToCustomProperties(
-  theme: ThemeConfig,
-): Record<string, string | number> {
+export function themeToCustomProperties(theme: ThemeConfig): Record<string, string | number> {
   const props: Record<string, string | number> = {};
 
   Object.entries(theme).forEach(([category, values]) => {
@@ -28,7 +26,13 @@ export function themeToCustomProperties(
 
     Object.entries(values).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
-        props[`--${prefix}-${key}`] = value as string | number;
+        // color-prefixes shouldn't be auto applied. Primtive colors will be --key instead of --color-key to allow more flexibility in naming (e.g. color-background-primary instead of color-color-background-primary)
+        // semantic colors are written in config as color-key by default, so we need to avoid double prefixing them as --color-color-key
+        if (category === "color") {
+          props[`--${key}`] = value as string | number;
+        } else {
+          props[`--${prefix}-${key}`] = value as string | number;
+        }
       }
     });
   });

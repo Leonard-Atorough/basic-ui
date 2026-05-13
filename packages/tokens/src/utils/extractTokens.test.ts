@@ -3,10 +3,10 @@ import { extractTokens } from "./extractTokens";
 import type { ThemeConfig } from "../types";
 
 const mockTheme: ThemeConfig = {
-  colors: { bg: "hsl(210 20% 97%)", primary: "hsl(119 43% 52%)" },
+  color: { "color-background-primary": "hsl(210 20% 97%)", "color-primary": "hsl(119 43% 52%)" },
   spacing: { xs: "0.25rem", md: "1rem", lg: "1.5rem" },
   radius: { sm: "0.25rem", md: "0.375rem", lg: "0.5rem" },
-  shadows: { sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)" },
+  shadow: { s1: "0 1px 2px 0 rgb(0 0 0 / 0.05)", s2: "0 1px 3px 0 rgb(0 0 0 / 0.1)" },
   fontSize: { xs: "0.75rem", md: "1rem" },
   fontWeight: { normal: 400, bold: 700 },
   lineHeight: { tight: 1.15, normal: 1.45 },
@@ -20,11 +20,17 @@ const mockTheme: ThemeConfig = {
 };
 
 describe("extractTokens", () => {
-  it.each<[keyof ThemeConfig, string, string]>([
-    ["colors", "color", "bg"],
+  it.each<
+    [
+      keyof ThemeConfig,
+      string, // prefix
+      string, // key
+    ]
+  >([
+    ["color", "color", "color-background-primary"],
     ["spacing", "spacing", "xs"],
     ["radius", "radius", "sm"],
-    ["shadows", "shadow", "sm"],
+    ["shadow", "shadow", "s1"],
     ["fontSize", "text", "xs"],
     ["fontWeight", "font-weight", "normal"],
     ["lineHeight", "leading", "tight"],
@@ -43,12 +49,12 @@ describe("extractTokens", () => {
 
   it("handles undefined category", () => {
     const theme: ThemeConfig = { spacing: mockTheme.spacing };
-    expect(extractTokens(theme, "colors")).toEqual({});
+    expect(extractTokens(theme, "color")).toEqual({});
   });
 
   it("handles empty category", () => {
-    const theme: ThemeConfig = { colors: {} };
-    expect(extractTokens(theme, "colors")).toEqual({});
+    const theme: ThemeConfig = { color: {} };
+    expect(extractTokens(theme, "color")).toEqual({});
   });
 
   it("handles numeric values correctly", () => {

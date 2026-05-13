@@ -17,28 +17,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 type ThemeObj = Record<string, Record<string, string | number>>;
 
-/** Primitive color prefixes that shouldn't be exported to CSS (they're only used internally) */
-const PRIMITIVE_PREFIXES = ["--color-green-", "--color-purple-", "--color-gray-"];
-
-/** Filter out primitive color tokens, keeping only semantic colors and other theme tokens */
-function filterPrimitiveTokens(
-  props: Record<string, string | number>,
-): Record<string, string | number> {
-  return Object.fromEntries(
-    Object.entries(props).filter(
-      ([varName]) => !PRIMITIVE_PREFIXES.some((prefix) => varName.startsWith(prefix)),
-    ),
-  );
-}
-
 /** Returns only the entries in dark that differ from light (for CSS overrides) */
 function computeDarkDiff(
   lightProps: Record<string, string | number>,
   dark: ThemeObj,
 ): Record<string, string | number> {
-  const darkProps = filterPrimitiveTokens(
-    themeToCustomProperties(dark as any) as Record<string, string | number>,
-  );
+  const darkProps = themeToCustomProperties(dark as any) as Record<string, string | number>;
   const diff: Record<string, string | number> = {};
 
   for (const [varName, value] of Object.entries(darkProps)) {
@@ -50,17 +34,15 @@ function computeDarkDiff(
 }
 
 const light = lightTheme as unknown as ThemeObj;
-const lightProps = filterPrimitiveTokens(
-  themeToCustomProperties(light) as Record<string, string | number>,
-);
+const lightProps = themeToCustomProperties(light) as Record<string, string | number>;
 const dark = darkTheme as unknown as ThemeObj;
-const darkDiff = computeDarkDiff(lightProps, dark);
+const darkProps = computeDarkDiff(lightProps, dark);
 
 const lightCSSVars = Object.entries(lightProps)
   .map(([varName, value]) => `  ${varName}: ${value};`)
   .join("\n");
 
-const darkCSSVars = Object.entries(darkDiff)
+const darkCSSVars = Object.entries(darkProps)
   .map(([varName, value]) => `  ${varName}: ${value};`)
   .join("\n");
 
@@ -68,7 +50,7 @@ const css = `/* Auto-generated — run \`pnpm generate\` in packages/tokens to r
 
 @import "tailwindcss";
 
-@theme {
+@theme inline {
 ${lightCSSVars}
 }
 

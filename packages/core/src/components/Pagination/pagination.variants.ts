@@ -15,7 +15,7 @@ export const paginationButtonVariants = cva(
     variants: {
       variant: {
         default: [
-          "bg-base hover:bg-surface active:bg-surface-active",
+          "bg-bg hover:bg-surface active:bg-surface-active",
           "text-primary",
           "border border-base",
           "focus-visible:ring-primary",

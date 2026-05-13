@@ -1,0 +1,20 @@
+@import "../../../packages/tokens/src/styles/theme.css";
+
+/* Scan workspace packages for class names */
+@source "../../../packages/core/src";
+@source "../../../packages/icons/src";
+
+/* Reset browser defaults and apply theme to preview */
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+#storybook-root {
+  width: 100%;
+  min-height: 100vh;
+}

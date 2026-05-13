@@ -32,9 +32,6 @@ All notable changes to this project will be documented in this file.
 - Improved responsive handling in `Icon` component by integrating `useResponsive` hook for dynamic styling based on breakpoints.
 - Updated documentation to reflect new pagination logic and responsive icon handling.
 - Cleaned up imports and re-exports in hooks and lib for better maintainability and clearer code structure.
-
-### Fixed
-
 - Fixed pagination state calculation to correctly handle edge cases when total pages are less than the maximum visible pages.
 - Resolved issues with responsive icon sizing by ensuring proper use of `useResponsive` hook in the `Icon` component.
 

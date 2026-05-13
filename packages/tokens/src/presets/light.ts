@@ -6,7 +6,7 @@ import type { ThemeConfig } from "../types";
  */
 export const lightTheme: ThemeConfig = {
   color: {
-    // ===== PRIMITIVES: GREEN RAMP =====
+    // ===== PRIMITIVES: PRIMARY RAMP =====
     // Shared hue/saturation so the whole ramp scales together
     "primary-50": "hsl(119 43% 95%)",
     "primary-100": "hsl(119 43% 90%)",
@@ -19,7 +19,7 @@ export const lightTheme: ThemeConfig = {
     "primary-800": "hsl(119 43% 25%)",
     "primary-900": "hsl(119 43% 15%)",
 
-    // ===== PRIMITIVES: PURPLE RAMP =====
+    // ===== PRIMITIVES: SECONDARY RAMP =====
     // Saturation kept intentionally low (35%) so it complements without competing
     "secondary-50": "hsl(299 35% 95%)",
     "secondary-100": "hsl(299 35% 90%)",
@@ -29,6 +29,19 @@ export const lightTheme: ThemeConfig = {
     "secondary-500": "hsl(299 35% 55%)",
     "secondary-600": "hsl(299 35% 45%)",
     "secondary-700": "hsl(299 35% 35%)",
+
+    // ===== PRIMITIVES: ACCENT RAMP =====
+    // Used sparingly for accents and feedback, so saturation is moderate (50%)
+    "accent-50": "hsl(48 50% 95%)",
+    "accent-100": "hsl(48 50% 90%)",
+    "accent-200": "hsl(48 50% 80%)",
+    "accent-300": "hsl(48 50% 70%)",
+    "accent-400": "hsl(48 50% 60%)",
+    "accent-500": "hsl(48 50% 50%)",
+    "accent-600": "hsl(48 50% 40%)",
+    "accent-700": "hsl(48 50% 30%)",
+    "accent-800": "hsl(48 50% 20%)",
+    "accent-900": "hsl(48 50% 10%)",
 
     // ===== PRIMITIVES: NEUTRAL GRAY RAMP =====
     // Slight cool tint (210°) avoids flat lifeless grays

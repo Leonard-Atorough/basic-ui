@@ -29,6 +29,10 @@ export interface ThemeInput {
  * });
  */
 export function createTheme(config: ThemeInput): void {
+  if (typeof document === "undefined") {
+    console.warn("createTheme() can only be used in a browser environment.");
+    return;
+  }
   const root = document.documentElement;
 
   // Helper to inject theme to a target element

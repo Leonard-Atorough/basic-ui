@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file.
 - Updated Storybook `.storybook/index.css` to apply theme background and text colors to preview frame body.
 - Refactored dark theme preset to use direct HSL values instead of CSS variable references for better build-time resolution.
 - Enhanced theme type definitions to include all primitive color ramps (green, purple, gray) as available semantic tokens.
-- Updated `themeToCustomProperties` utility to support optional token filtering.
+- Updated theme token generation flow to support optional token filtering when producing CSS output.
 
 ### Fixed
 

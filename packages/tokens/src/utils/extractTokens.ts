@@ -1,6 +1,6 @@
-import { ThemeConfig } from "@tokens/types";
+import { ThemeConfig } from "../types";
 import { convertToKebabCase } from "./css-var";
-import { PREFIX_MAP } from "..";
+import { PREFIX_MAP } from "../constants";
 
 /**
  * Extracts tokens from a theme configuration for a specific category (e.g., colors, spacing).

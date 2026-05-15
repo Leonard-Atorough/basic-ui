@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import { cn } from "@core/lib";
 import { Icon } from "../Icon";
 import { CheckCircleIcon, XCircleIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@basic-ui/icons";
+import type { AlertProps } from "./alert.types";
+import type { PolymorphicRef } from "../../types/props";
+import type { AllowedAlertElements } from "./alert.types";
 
 import {
   alertVariants,
@@ -10,7 +13,6 @@ import {
   alertContentVariants,
   alertActionVariants,
 } from "./alert.variants";
-import type { AlertProps } from "./alert.types";
 
 // Map alert severities to icon components
 const ICON_MAP: Record<string, React.ComponentType> = {
@@ -21,10 +23,10 @@ const ICON_MAP: Record<string, React.ComponentType> = {
 };
 
 /**
- * Alert — Slot-based notification component
+ * Alert Component
  *
- * Displays persistent inline feedback with optional title and dismissal.
- * Uses semantic slots (`title` + `description`) for composition clarity.
+ * Displays persistent inline feedback with optional title, icon, and dismissal.
+ * The alert content is provided via `children`. An optional `title` prop can be used for a heading.
  *
  * Accessibility:
  * - Uses `role="alert"` for error/warning (time-sensitive)
@@ -33,92 +35,96 @@ const ICON_MAP: Record<string, React.ComponentType> = {
  * - Dismissible alerts include accessible close button
  *
  * @example
- * // Simple info alert (description slot)
- * <Alert description="This is an informational message" />
+ * // Simple info alert
+ * <Alert severity="info">This is an informational message</Alert>
  *
  * // Error alert with title and dismissible
  * <Alert
+ *   as="div"
  *   severity="error"
  *   title="Error"
- *   description="Something went wrong. Please try again."
- *   dismissible
  *   onDismiss={() => setShowAlert(false)}
- * />
+ * >
+ *   Something went wrong. Please try again.
+ * </Alert>
  */
-export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  (
-    {
-      severity = "info",
-      borderless = false,
-      icon,
-      iconMap,
-      title,
-      action,
-      onDismiss,
-      isOpen = true,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    const [isDismissed, setIsDismissed] = useState(false);
+const _Alert = <As extends AllowedAlertElements = "div">(
+  {
+    as,
+    severity = "info",
+    borderless = false,
+    icon,
+    iconMap,
+    title,
+    action,
+    onDismiss,
+    isOpen = true,
+    className,
+    children,
+    ...props
+  }: AlertProps<As>,
+  ref?: PolymorphicRef<As>,
+) => {
+  const [isDismissed, setIsDismissed] = useState(false);
 
-    const mergedIconMap = { ...ICON_MAP, ...iconMap };
-    const iconNode = icon === false ? null : icon || mergedIconMap[severity];
-    const iconElement = typeof iconNode === "function" ? React.createElement(iconNode) : iconNode;
+  const Comp = (as || "div") as As;
+  const Child = Comp === "p" || Comp === "span" ? "span" : "div"; // Use inline wrappers for inline parents to avoid invalid nesting/hydration issues
+  const mergedIconMap = { ...ICON_MAP, ...iconMap };
+  const iconNode = icon === false ? null : icon || mergedIconMap[severity];
+  const iconElement = typeof iconNode === "function" ? React.createElement(iconNode) : iconNode;
 
+  const handleDismiss = () => {
+    setIsDismissed(true);
+    onDismiss?.();
+  };
 
+  // Determine if alert should be shown
+  const isVisible = isOpen && !isDismissed;
 
+  if (!isVisible) {
+    return null;
+  }
 
-    const handleDismiss = () => {
-      setIsDismissed(true);
-      onDismiss?.();
-    };
+  // Semantic role: alert for urgent messages, status for polite notifications
+  const role = severity === "error" || severity === "warning" ? "alert" : "status";
 
-    // Determine if alert should be shown
-    const isVisible = isOpen && !isDismissed;
+  return (
+    <Comp
+      ref={ref}
+      role={role}
+      className={cn(alertVariants({ severity, borderless }), className)}
+      {...(props as any)}
+    >
+      {/* Icon */}
+      <Child className={alertIconVariants()}>
+        {iconElement && <Icon icon={iconElement} variant={severity} size="sm" />}
+      </Child>
 
-    if (!isVisible) {
-      return null;
-    }
+      {/* Content */}
+      <Child className={alertContentVariants()}>
+        {title && <Child className={alertTitleVariants()}>{title}</Child>}
+        <Child>{children}</Child>
+      </Child>
 
-    // Semantic role: alert for urgent messages, status for polite notifications
-    const role = severity === "error" || severity === "warning" ? "alert" : "status";
-
-    return (
-      <div
-        ref={ref}
-        role={role}
-        className={cn(alertVariants({ severity, borderless }), className)}
-        {...props}
-      >
-        {/* Icon */}
-        <div className={alertIconVariants()}>
-          {iconElement && <Icon icon={iconElement} variant={severity} size="sm" />}
-        </div>
-
-        {/* Content */}
-        <div className={alertContentVariants()}>
-          {title && <div className={alertTitleVariants()}>{title}</div>}
-          <div>{props.children}</div>
-        </div>
-
-        <div className={alertActionVariants()}>
-          {action}
-          {/* Dismiss button */}
-          {onDismiss && (
-            <button
-              onClick={handleDismiss}
-              className="shrink-0 -mr-sm -my-sm p-sm hover:bg-black/5 rounded transition-colors"
-              aria-label="Dismiss alert"
+      <Child className={alertActionVariants()}>
+        {action}
+        {/* Dismiss button */}
+        {onDismiss && (
+          <button
+            onClick={handleDismiss}
+            className="shrink-0 -mr-sm -my-sm p-sm hover:bg-black/5 rounded transition-colors"
+            aria-label="Dismiss alert"
           >
             <Icon icon={<XIcon />} size="sm" />
           </button>
         )}
-        </div>
-      </div>
-    );
-  },
-);
+      </Child>
+    </Comp>
+  );
+};
 
-Alert.displayName = "Alert";
+export const Alert = forwardRef(_Alert) as <Element extends AllowedAlertElements = "div">(
+  props: AlertProps<Element> & { ref?: PolymorphicRef<Element> },
+) => React.ReactElement | null;
+
+(Alert as any).displayName = "Alert"; // any cast to avoid type issues with forwardRef and generics

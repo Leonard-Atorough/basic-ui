@@ -139,3 +139,16 @@ export const ControlledDismissal: Story = {
     );
   },
 };
+
+export const AsDifferentElement: Story = {
+  render: () => (
+    <div className="flex flex-col gap-md">
+      <Alert as="span" severity="info">
+        This alert is rendered as a &lt;span&gt; element.
+      </Alert>
+      <Alert as="p" severity="success">
+        This alert is rendered as a &lt;p&gt; element.
+      </Alert>
+    </div>
+  ),
+};

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { generatePageNumbers } from "../shared/generatePageNumbers";
 import { calculatePaginationState } from "@core/lib/calculatePaginationState";
 import {
@@ -25,42 +25,45 @@ export const TablePagination = React.forwardRef<HTMLDivElement, TablePaginationP
       maxBoundaryButtons = 1,
       shape = "rounded",
       variant: variant = "default",
-        color = "default",
+      color = "default",
       className,
+      initialPage,
       ...rest
     },
     ref,
   ) => {
     const [internalCurrentPage, setInternalCurrentPage] = React.useState<number>(() =>
-      typeof currentPage === "number" ? currentPage : rest.initialPage ?? 1,
+      typeof currentPage === "number" && currentPage > 0 ? currentPage : initialPage || 1,
     );
 
     const isControlled = typeof currentPage === "number";
-    const activeCurrentPage = isControlled ? (currentPage as number) : internalCurrentPage;
 
-    const handlePageChange = (page: number) => {
-      if (!isControlled) {
-        setInternalCurrentPage(page);
-      }
-      onPageChange?.(page);
-    };
-
-    // ...existing code...
-
-    // Prefer explicit pageCount, else compute
     const totalPages = useMemo(
       () => pageCount ?? (totalItems && itemsPerPage ? Math.ceil(totalItems / itemsPerPage) : 1),
       [pageCount, totalItems, itemsPerPage],
     );
 
-    // Keep uncontrolled internal page in range if totalPages changes
+    const clamped = (page: number) => Math.max(1, Math.min(page, totalPages));
+
+    const activeCurrentPage = isControlled
+      ? clamped((currentPage as number) || 1)
+      : internalCurrentPage;
+
+    const handlePageChange = useCallback(
+      (page: number) => {
+        const newPage = clamped(page);
+        if (!isControlled) {
+          setInternalCurrentPage(newPage);
+        }
+        onPageChange?.(newPage);
+      },
+      [isControlled, onPageChange, totalPages],
+    );
+
     React.useEffect(() => {
+      const newPage = clamped(activeCurrentPage);
       if (!isControlled) {
-        setInternalCurrentPage((prev) => {
-          if (prev < 1) return 1;
-          if (prev > totalPages) return totalPages;
-          return prev;
-        });
+        setInternalCurrentPage(newPage);
       }
     }, [totalPages, isControlled]);
 
@@ -80,7 +83,9 @@ export const TablePagination = React.forwardRef<HTMLDivElement, TablePaginationP
       first: customIcons?.first || <ChevronLeftIcon />,
       last: customIcons?.last || <ChevronRightIcon />,
     };
+
     if (totalPages <= 1) return null;
+
     return (
       <nav
         ref={ref}

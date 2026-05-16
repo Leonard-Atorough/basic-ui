@@ -32,9 +32,9 @@ export const paginationButtonVariants = cva(
         circular: "rounded-full",
       },
       color: {
-        default: "bg-neutral-200/20 hover:bg-neutral-300 active:bg-neutral-400",
-        primary: "bg-primary-500/20 hover:bg-primary-600 active:bg-primary-700",
-        secondary: "bg-secondary-500/20 hover:bg-secondary-600 active:bg-secondary-700",
+        default: "bg-neutral-200/10 hover:bg-neutral-300 active:bg-neutral-400",
+        primary: "bg-primary-500/10 hover:bg-primary-600 active:bg-primary-700",
+        secondary: "bg-secondary-500/10 hover:bg-secondary-600 active:bg-secondary-700",
       },
       active: {
         true: "",
@@ -45,17 +45,32 @@ export const paginationButtonVariants = cva(
       {
         color: "default",
         active: true,
-        className: "bg-neutral-400/100 hover:bg-neutral-400",
+        className: "bg-neutral-400/60 hover:bg-neutral-400",
       },
       {
         color: "primary",
         active: true,
-        className: "bg-primary-500/100 hover:bg-primary-300",
+        className: "bg-primary-500/60 hover:bg-primary-300",
       },
       {
         color: "secondary",
         active: true,
-        className: "bg-secondary-500/100 hover:bg-secondary-300",
+        className: "bg-secondary-500/60 hover:bg-secondary-300",
+      },
+      {
+        variant: "outlined",
+        color: "default",
+        className: "border-neutral-400/50",
+      },
+      {
+        variant: "outlined",
+        color: "primary",
+        className: "border-primary-500/50",
+      },
+      {
+        variant: "outlined",
+        color: "secondary",
+        className: "border-secondary-500/50",
       },
     ],
     defaultVariants: {

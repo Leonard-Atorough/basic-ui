@@ -3,7 +3,7 @@
 TablePagination provides accessible pagination controls for tabular data, supporting both controlled and uncontrolled usage.
 
 ```tsx
-import { TablePagination } from "basic-ui/core"
+import { TablePagination } from "@basic-ui/core"
 
 // Basic example
 <TablePagination pageCount={10} currentPage={1} onPageChange={setPage} />

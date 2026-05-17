@@ -3,7 +3,7 @@
 LinkPagination renders pagination as semantic links for URL-driven navigation, ideal for blogs or listings.
 
 ```tsx
-import { LinkPagination } from "basic-ui/core";
+import { LinkPagination } from "@basic-ui/core";
 
 // Basic example
 <LinkPagination pageCount={5} currentPage={2} getPageHref={(p) => `/page/${p}`} />;

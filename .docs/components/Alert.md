@@ -3,7 +3,8 @@
 Displays persistent inline feedback with optional title and dismissal without interrupting the users use of the app.
 
 ```tsx
-import { Alert } from "basic-ui/core"
+import { Alert } from "@basic-ui/core"
+
 <Alert title="Warning" description="This is a warning alert" severity="warning">
 ```
 

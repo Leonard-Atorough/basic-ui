@@ -17,7 +17,7 @@ Use this skill to generate consistent component documentation markdown files fol
 One-line summary describing what the component does and when to use it.
 
 ```tsx
-import { {ComponentName} } from "basic-ui/core"
+import { {ComponentName} } from "@basic-ui/core"
 
 // Basic example
 <{ComponentName} propA={value} />

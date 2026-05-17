@@ -1,6 +1,6 @@
 ---
 name: challenge-design
-description: Engage the user in a back and forth design discussion to collaboratively figure out the function and API of a new component or hook. The user will then implement the component based on the design. This skill is ideal for tackling larger, more complex features that require thoughtful design and iteration. Use when user is unsure aobut how to design a new component or hook, or when they would benefit from a collaborative design discussion before implementation. Also use when user says "I want to implement X but I'm not sure how to design the API" or "I have an idea for a component but I want to flesh out the details first".
+description: Engage the user in a back and forth design discussion to collaboratively figure out the function and API of a new component or hook. The user will then implement the component based on the design. This skill is ideal for tackling larger, more complex features that require thoughtful design and iteration. Use when user is unsure about how to design a new component or hook, or when they would benefit from a collaborative design discussion before implementation. Also use when user says "I want to implement X but I'm not sure how to design the API" or "I have an idea for a component but I want to flesh out the details first".
 user-invocable: true
 ---
 

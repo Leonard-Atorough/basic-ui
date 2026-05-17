@@ -10,7 +10,7 @@ const _Text = <As extends AllowedTextElements = "p">(
     as,
     size = "md",
     weight = "normal",
-    color = "default",
+    color = "inherit",
     align = "left",
     truncate = false,
     wrap = "nowrap",
@@ -58,11 +58,24 @@ const _Text = <As extends AllowedTextElements = "p">(
     !isBuiltInColor && resolvedColor ? resolvedColor : "",
   );
 
+  // Accessibility: if text is visually truncated and the consumer didn't provide
+  // a `title` or `aria-label`, expose the full text to assistive tech via both
+  // `title` (hover) and `aria-label` (screen readers) when `children` is a string.
+  const accessibilityProps: Record<string, unknown> = {};
+  const restAny = rest as Record<string, unknown>;
+  const hasTitle = restAny.title !== undefined;
+  const hasAriaLabel = restAny["aria-label"] !== undefined || restAny.ariaLabel !== undefined;
+
+  if (resolvedTruncate && !hasTitle && !hasAriaLabel && typeof children === "string") {
+    accessibilityProps.title = children;
+    accessibilityProps["aria-label"] = children;
+  }
+
   return (
     //@ts-expect-error Polymorphic component with dynamic element type can be tricky to type perfectly, but the core props should work correctly
     // The type safety is enforced by the function signature (PolymorphicRef<As>)
     // and the fact that 'as' determines the actual DOM element. We'll test it to ensure it behaves as expected.
-    <Comp ref={ref} className={resolvedStyles} {...rest}>
+    <Comp ref={ref} className={resolvedStyles} {...accessibilityProps} {...rest}>
       {children}
     </Comp>
   );

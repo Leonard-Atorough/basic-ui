@@ -26,8 +26,7 @@ interface TextOwnProps extends CommonProps {
   /** Truncate text with ellipsis. @default false */
   truncate?: ResponsiveValue<boolean>;
   /** Text wrapping behavior. @default "nowrap" */
-  wrap?: ResponsiveValue<"nowrap" | "wrap" | "balance" | "pretty" | "stable">;
-
+  wrap?: ResponsiveValue<"nowrap" | "wrap" | "balance" | "pretty">;
 }
 
 export type TextProps<As extends AllowedTextElements = "p"> = RestrictedPropsWithAs<

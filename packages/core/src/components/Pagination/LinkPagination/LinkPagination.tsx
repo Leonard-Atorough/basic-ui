@@ -88,6 +88,7 @@ export const LinkPagination = React.forwardRef<
             className={paginationButtonVariants({ size: "md", shape, variant, color })}
             aria-label="Go to first page"
             aria-disabled={!hasPrev}
+            disabled={!hasPrev}
             onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
               !hasPrev && e.preventDefault()
             }
@@ -102,6 +103,7 @@ export const LinkPagination = React.forwardRef<
             className={paginationButtonVariants({ size: "md", shape, variant, color })}
             aria-label="Go to previous page"
             aria-disabled={!hasPrev}
+            disabled={!hasPrev}
             onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
               !hasPrev && e.preventDefault()
             }
@@ -148,6 +150,7 @@ export const LinkPagination = React.forwardRef<
             className={paginationButtonVariants({ size: "md", shape, variant, color })}
             aria-label="Go to next page"
             aria-disabled={!hasNext}
+            disabled={!hasNext}
             onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
               !hasNext && e.preventDefault()
             }
@@ -162,6 +165,7 @@ export const LinkPagination = React.forwardRef<
             className={paginationButtonVariants({ size: "md", shape, variant, color })}
             aria-label="Go to last page"
             aria-disabled={!hasNext}
+            disabled={!hasNext}
             onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
               !hasNext && e.preventDefault()
             }

@@ -44,7 +44,7 @@ const meta = {
     },
     shape: {
       control: "select",
-      options: ["rounded", "square"],
+      options: ["rounded", "square", "circular"],
       description: "Border radius style",
     },
   },

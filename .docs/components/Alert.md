@@ -1,176 +1,76 @@
 # Alert
 
-Displays persistent inline feedback with optional title and dismissal without interrupting the users use of the app.
+Displays inline feedback for the user with optional title, icon, action, and dismissal. Alerts are non-modal and do not interrupt user tasks.
 
 ```tsx
-import { Alert } from "@basic-ui/core"
+import { Alert } from "@basic-ui/core";
 
-<Alert title="Warning" description="This is a warning alert" severity="warning">
+<Alert severity="warning" title="Something went wrong">
+  Please check the form and try again.
+</Alert>;
 ```
 
-## Api Reference
-The alert component  gives users information without obstructing their use of the app. It can be used to display informational or actionable prompts to the user. 
+## Overview
 
-
-| **Prop**    | Type                                                                    | Default |
-| ----------- | ----------------------------------------------------------------------- | ------- |
-| severity    | "success" \| "error" \| "warning" \| "info"                             | "info"  |
-| borderless  | boolean                                                                 |         |
-| icon        | ReactNode \| false                                                      |         |
-| iconMap     | Partial<Record<"success" \| "error" \| "warning" \| "info", ReactNode>> |         |
-| title       | ReactNode                                                               |         |
-| action      | ReactNode                                                               |         |
-| onDismiss   | () => void                                                              |         |
-| isOpen      | boolean                                                                 |         |
+Use `Alert` for contextual messages such as success, error, warning, or informational notices. The component supports controlled visibility (`isOpen` + `onDismiss`) and an `action` slot for buttons or links.
 
 ## Examples
 
-  
-
-### Severity
-
-Use the `severity` prop to indicate the type of alert. This changes the color and icon to match the context.
-
-  
+### Basic
 
 ```tsx
-
-<Alert severity="info">This is an info alert.</Alert>
-
-<Alert severity="success">This is a success alert.</Alert>
-
-<Alert severity="warning">This is a warning alert.</Alert>
-
-<Alert severity="error">This is an error alert.</Alert>
-
+<Alert severity="info">This is an informational message.</Alert>
 ```
 
-  
-
-### Borderless
-
-Set the `borderless` prop to remove the border from the alert for a more minimal appearance.
-
-  
+### With title and action
 
 ```tsx
-
-<Alert severity="info" borderless>This is an info alert.</Alert>
-
-<Alert severity="success" borderless>This is a success alert.</Alert>
-
-<Alert severity="warning" borderless>This is a warning alert.</Alert>
-
-<Alert severity="error" borderless>This is an error alert.</Alert>
-
-```
-
-  
-
-### With Custom Icon
-
-Override the default icon by passing a custom icon to the `icon` prop.
-
-  
-
-```tsx
-
-const CustomCheckIcon = <span data-testid="custom-check">✓</span>;
-
-<Alert severity="success" icon={CustomCheckIcon}>Test</Alert>
-
-```
-
-  
-
-### With Custom Icon mapped to specific severity
-
-Use the `iconMap` prop to provide custom icons for specific severities.
-
-  
-
-```tsx
-
-const CustomCheckIcon = <span data-testid="custom-check">✓</span>;
-
-<Alert severity="success" iconMap={{ success: CustomCheckIcon }}>Test</Alert>
-
-```
-
-  
-
-### With Title
-
-Add a title to the alert using the `title` prop.
-
-  
-
-```tsx
-
-<Alert severity="info" title="Info Alert">This is an info alert.</Alert>
-
-```
-
-  
-
-### Action
-
-Add an action element (such as a button) to the alert using the `action` prop.
-
-  
-
-```tsx
-
-<Alert severity="error" title="Missing Fields"
-
-  action={
-
-    <Button onClick={onUndoClick} size="sm">
-
-      FIX
-
-    </Button>
-
-  }
-
->
-
-  This is an alert with a button component as its action
-
+<Alert severity="error" title="Failed to save" action={<Button size="sm">Retry</Button>}>
+  Something went wrong while saving your changes.
 </Alert>
-
 ```
 
-  
-
-### Controlled Visibility: `isOpen` and Dismissal
-
-Use the `isOpen` prop to control the visibility of the alert. Combine with `onDismiss` to allow the alert to be dismissed by the user.
-
-  
+### Dismissible (controlled)
 
 ```tsx
-
 const [open, setOpen] = useState(true);
 
-  
-
-<Alert
-
-  severity="info"
-
-  isOpen={open}
-
-  onDismiss={() => setOpen(false)}
-
->
-
-  This alert can be dismissed.
-
-</Alert>
-
+<Alert severity="info" isOpen={open} onDismiss={() => setOpen(false)}>
+  This alert can be dismissed by the user.
+</Alert>;
 ```
 
----
+### Custom icons
 
-For more details, see the source code and stories in the repository. [Alert](https://github.com/basic-ui-team/basic-ui/tree/main/packages/core/src/components/Alert)
+```tsx
+const CustomIcon = <span aria-hidden>★</span>;
+<Alert severity="success" icon={CustomIcon}>Custom icon</Alert>
+
+// or map icons per severity
+<Alert iconMap={{ success: CustomIcon }}>Mapped icon</Alert>
+```
+
+## API
+
+| Prop         | Type                                          | Default   | Description                                                        |
+| ------------ | --------------------------------------------- | --------- | ------------------------------------------------------------------ | --------------------------- | --- | ------------------------------------------------------------ |
+| `severity`   | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'`  | Visual intent, controls colors and default icon.                   |
+| `title`      | `React.ReactNode`                             | —         | Optional heading displayed at the start of the alert.              |
+| `children`   | `React.ReactNode`                             | —         | Main message content.                                              |
+| `action`     | `React.ReactNode`                             | —         | Action slot (button/link) displayed inline.                        |
+| `icon`       | `React.ReactNode \| false`                    | —         | Override the default icon; pass `false` to hide it.                |
+| `iconMap`    | `Partial<Record<'info'                        | 'success' | 'warning'                                                          | 'error', React.ReactNode>>` | —   | Provide icons keyed by severity. `icon` overrides `iconMap`. |
+| `borderless` | `boolean`                                     | `false`   | Remove border for a minimal appearance.                            |
+| `isOpen`     | `boolean`                                     | —         | Controlled visibility. When omitted, the alert is always rendered. |
+| `onDismiss`  | `() => void`                                  | —         | Called when the user dismisses the alert (if dismissible).         |
+
+## Accessibility
+
+- The alert content includes `role="status"` for non-urgent informational messages and may use `role="alert"` for assertive messages depending on severity — check implementation for details.
+- Active focus behavior: when dismissible, ensure focus is managed by the consumer after dismissal if needed.
+- Icons should include meaningful text via `aria-hidden` combined with the message content; avoid conveying critical information solely through color or icon.
+
+## Stories & Source
+
+- Storybook examples: `Alert/Basic`, `Alert/WithAction`, `Alert/Dismissible` (if present).
+- Source: https://github.com/basic-ui-team/basic-ui/tree/main/packages/core/src/components/Alert

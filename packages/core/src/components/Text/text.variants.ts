@@ -25,7 +25,7 @@ export const textVariants = cva("font-sans", {
       success: "text-success",
       warning: "text-warning",
       info: "text-info",
-      string: "",
+      custom: "",
     },
     align: {
       left: "text-left",
@@ -36,6 +36,13 @@ export const textVariants = cva("font-sans", {
       true: "truncate",
       false: "",
     },
+    wrap: {
+      nowrap: "whitespace-nowrap",
+      wrap: "whitespace-normal",
+      balance: "text-wrap-balance",
+      pretty: "text-wrap-pretty",
+      stable: "text-wrap-stable",
+    },
   },
   defaultVariants: {
     size: "md",
@@ -43,5 +50,6 @@ export const textVariants = cva("font-sans", {
     color: "inherit",
     align: "left",
     truncate: false,
+    wrap: "nowrap",
   },
 });

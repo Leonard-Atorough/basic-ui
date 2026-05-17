@@ -1,4 +1,4 @@
-import { SharedPaginationProps } from "../shared/sharedProps";
+import { SharedPaginationProps } from "../shared/pagination.types";
 
 /**
  * Props for `TablePagination`.

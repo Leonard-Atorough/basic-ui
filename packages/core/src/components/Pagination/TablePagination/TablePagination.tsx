@@ -1,13 +1,7 @@
-import React, { useCallback, useMemo } from "react";
-import { generatePageNumbers } from "../shared/generatePageNumbers";
-import { calculatePaginationState } from "@core/lib/calculatePaginationState";
-import {
-  paginationVariants,
-  paginationButtonVariants,
-  paginationEllipsisVariants,
-} from "../shared/pagination.variants.ts";
+import React from "react";
+import { usePagination } from "../shared/usePagination.tsx";
+import { Pagination } from "../shared/Pagination.tsx";
 import { Icon } from "../../Icon";
-import { ChevronLeftIcon, ChevronRightIcon } from "@basic-ui/icons";
 import type { TablePaginationProps } from "./tablePagination.types";
 
 /**
@@ -50,142 +44,87 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
     },
     ref,
   ) => {
-    const [internalCurrentPage, setInternalCurrentPage] = React.useState<number>(() =>
-      typeof currentPage === "number" && currentPage > 0 ? currentPage : initialPage || 1,
-    );
+    const { totalPages, activeCurrentPage, pageNumbers, hasPrev, hasNext, handlePageChange } =
+      usePagination({
+        totalItems,
+        itemsPerPage,
+        pageCount,
+        currentPage,
+        onPageChange,
+        initialPage,
+        maxSiblingButtons,
+        maxBoundaryButtons,
+      });
+    const renderControl = (
+      type: "first" | "prev" | "next" | "last",
+      disabled: boolean,
+      className?: string,
+      ariaLabel?: string,
+      onClick?: () => void,
+      icon?: React.ReactNode,
+    ) => {
+      if ((type === "first" || type === "last") && !showFirstLast) return null;
+      if ((type === "prev" || type === "next") && !showPrevNext) return null;
 
-    const isControlled = typeof currentPage === "number";
-
-    const totalPages = useMemo(
-      () => pageCount ?? (totalItems && itemsPerPage ? Math.ceil(totalItems / itemsPerPage) : 1),
-      [pageCount, totalItems, itemsPerPage],
-    );
-
-    const clamped = (page: number) => Math.max(1, Math.min(page, totalPages));
-
-    const activeCurrentPage = isControlled
-      ? clamped((currentPage as number) || 1)
-      : internalCurrentPage;
-
-    const handlePageChange = useCallback(
-      (page: number) => {
-        const newPage = clamped(page);
-        if (!isControlled) {
-          setInternalCurrentPage(newPage);
-        }
-        onPageChange?.(newPage);
-      },
-      [isControlled, onPageChange, totalPages],
-    );
-
-    React.useEffect(() => {
-      const newPage = clamped(activeCurrentPage);
-      if (!isControlled) {
-        setInternalCurrentPage(newPage);
-      }
-    }, [totalPages, isControlled]);
-
-    const { hasPrev, hasNext } = useMemo(
-      () => calculatePaginationState(totalPages, 1, activeCurrentPage),
-      [totalPages, activeCurrentPage],
-    );
-    const pageNumbers = useMemo(
-      () =>
-        generatePageNumbers(activeCurrentPage, totalPages, maxSiblingButtons, maxBoundaryButtons),
-      [activeCurrentPage, totalPages, maxSiblingButtons, maxBoundaryButtons],
-    );
-
-    const icons = {
-      previous: customIcons?.previous || <ChevronLeftIcon />,
-      next: customIcons?.next || <ChevronRightIcon />,
-      first: customIcons?.first || <ChevronLeftIcon />,
-      last: customIcons?.last || <ChevronRightIcon />,
+      return (
+        <button
+          key={`control-${type}`}
+          type="button"
+          onClick={onClick}
+          disabled={disabled}
+          aria-label={ariaLabel}
+          aria-disabled={disabled}
+          className={className}
+        >
+          <Icon icon={icon} size={type === "prev" || type === "next" ? "sm" : "md"} />
+        </button>
+      );
     };
 
-    if (totalPages <= 1) return null;
+    const renderPage = (
+      page: number,
+      isActive: boolean,
+      isDisabled?: boolean,
+      ariaLabel?: string,
+      onClick?: () => void,
+      tabIndex?: number | undefined,
+      className?: string,
+    ) => {
+      return (
+        <button
+          key={page}
+          onClick={onClick}
+          disabled={isDisabled}
+          aria-disabled={isDisabled}
+          className={className}
+          aria-current={isActive ? "page" : undefined}
+          aria-label={ariaLabel}
+          tabIndex={tabIndex}
+          type="button"
+        >
+          {page}
+        </button>
+      );
+    };
 
     return (
-      <nav
+      <Pagination
         ref={ref}
-        className={paginationVariants({}) + (className ? ` ${className}` : "")}
-        role="navigation"
-        aria-label="Pagination"
+        totalPages={totalPages}
+        activePage={activeCurrentPage}
+        pageNumbers={pageNumbers}
+        hasPrev={hasPrev}
+        hasNext={hasNext}
+        shape={shape}
+        variant={variant}
+        color={color}
+        className={className}
+        renderPage={renderPage}
+        renderControl={renderControl}
+        handlePageChange={handlePageChange}
+        customIcons={customIcons}
         {...rest}
-      >
-        {showFirstLast && (
-          <button
-            onClick={() => handlePageChange(1)}
-            disabled={!hasPrev}
-            className={paginationButtonVariants({ size: "md", shape, variant, color })}
-            aria-label="Go to first page"
-            type="button"
-          >
-            <Icon icon={icons.first} size="md" />
-          </button>
-        )}
-        {showPrevNext && (
-          <button
-            onClick={() => handlePageChange(activeCurrentPage - 1)}
-            disabled={!hasPrev}
-            className={paginationButtonVariants({ size: "md", shape, variant, color })}
-            aria-label="Go to previous page"
-            type="button"
-          >
-            <Icon icon={icons.previous} size="sm" />
-          </button>
-        )}
-        {pageNumbers.map((page, idx) =>
-          page === "ellipsis" ? (
-            <div
-              key={`ellipsis-${idx}`}
-              className={paginationEllipsisVariants()}
-              aria-hidden="true"
-            >
-              …
-            </div>
-          ) : (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page as number)}
-              className={paginationButtonVariants({
-                size: "md",
-                shape,
-                variant,
-                color,
-                active: page === activeCurrentPage,
-              })}
-              aria-current={page === activeCurrentPage ? "page" : undefined}
-              aria-label={`Go to page ${page}`}
-              type="button"
-            >
-              {page}
-            </button>
-          ),
-        )}
-        {showPrevNext && (
-          <button
-            onClick={() => handlePageChange(activeCurrentPage + 1)}
-            disabled={!hasNext}
-            className={paginationButtonVariants({ size: "md", shape, variant, color })}
-            aria-label="Go to next page"
-            type="button"
-            
-          >
-            <Icon icon={icons.next} size="sm" />
-          </button>
-        )}
-        {showFirstLast && (
-          <button
-            onClick={() => handlePageChange(totalPages)}
-            disabled={!hasNext}
-            className={paginationButtonVariants({ size: "md", shape, variant, color })}
-            aria-label="Go to last page"
-            type="button"
-          >
-            <Icon icon={icons.last} size="md" />
-          </button>
-        )}
-      </nav>
+      />
     );
   },
 );

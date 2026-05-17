@@ -1,14 +1,9 @@
-import React, { useMemo } from "react";
-import { generatePageNumbers } from "../shared/generatePageNumbers";
-import { calculatePaginationState } from "@core/lib/calculatePaginationState";
-import {
-  paginationVariants,
-  paginationButtonVariants,
-  paginationEllipsisVariants,
-} from "../shared/pagination.variants.ts";
+import React from "react";
 import { Icon } from "../../Icon";
-import { ChevronLeftIcon, ChevronRightIcon } from "@basic-ui/icons";
 import type { LinkPaginationProps } from "./linkPagination.types";
+import { usePagination } from "../shared/usePagination.tsx";
+import { Pagination } from "../shared/Pagination.tsx";
+import { clamp } from "../shared/paginationUtils.ts";
 
 /**
  * LinkPagination
@@ -51,130 +46,116 @@ export const LinkPagination = React.forwardRef<
     },
     ref,
   ) => {
-    const clamped = (p: number) => Math.max(1, Math.min(p, totalPages));
+    const { totalPages, activeCurrentPage, pageNumbers, hasPrev, hasNext, handlePageChange } =
+      usePagination({
+        totalItems,
+        itemsPerPage,
+        pageCount,
+        currentPage,
+        onPageChange: (page) => {
+          getPageHref(page);
+        },
+        maxSiblingButtons,
+        maxBoundaryButtons,
+      });
 
-    const activeCurrentPage = clamped(currentPage || 1);
-    // Prefer explicit pageCount, else compute
-    const totalPages =
-      pageCount ?? (totalItems && itemsPerPage ? Math.ceil(totalItems / itemsPerPage) : 1);
-    const { hasPrev, hasNext } = useMemo(
-      () => calculatePaginationState(totalPages, 1, activeCurrentPage),
-      [totalPages, activeCurrentPage],
-    );
+    const renderControl = (
+      type: "first" | "prev" | "next" | "last",
+      disabled: boolean,
+      className?: string,
+      ariaLabel?: string,
+      onClick?: () => void,
+      icon?: React.ReactNode,
+    ) => {
+      if ((type === "first" || type === "last") && !showFirstLast) return null;
+      if ((type === "prev" || type === "next") && !showPrevNext) return null;
 
-    const pageNumbers = useMemo(
-      () =>
-        generatePageNumbers(activeCurrentPage, totalPages, maxSiblingButtons, maxBoundaryButtons),
-      [activeCurrentPage, totalPages, maxSiblingButtons, maxBoundaryButtons],
-    );
-    const icons = {
-      previous: customIcons?.previous || <ChevronLeftIcon />,
-      next: customIcons?.next || <ChevronRightIcon />,
-      first: customIcons?.first || <ChevronLeftIcon />,
-      last: customIcons?.last || <ChevronRightIcon />,
+      const href =
+        type === "first"
+          ? getPageHref(1)
+          : type === "prev"
+          ? getPageHref(clamp(activeCurrentPage - 1, 1, totalPages))
+          : type === "next"
+          ? getPageHref(clamp(activeCurrentPage + 1, 1, totalPages))
+          : getPageHref(totalPages);
+
+      const handleAnchorClick: React.MouseEventHandler = (e) => {
+        if (disabled) {
+          e.preventDefault();
+          return;
+        }
+        onClick?.();
+      };
+
+      return (
+        <LinkComponent
+          key={`control-${type}`}
+          href={href}
+          onClick={handleAnchorClick}
+          aria-label={ariaLabel}
+          className={className}
+          aria-disabled={disabled}
+          tabIndex={disabled ? -1 : undefined}
+        >
+          <Icon icon={icon} size={type === "prev" || type === "next" ? "sm" : "md"} />
+        </LinkComponent>
+      );
     };
-    if (totalPages <= 1) return null;
+
+    const renderPage = (
+      page: number,
+      isActive: boolean,
+      isDisabled?: boolean,
+      ariaLabel?: string,
+      onClick?: () => void,
+      tabIndex?: number | undefined,
+      className?: string,
+    ) => {
+      const href = getPageHref(clamp(page, 1, totalPages));
+      const effectiveTabIndex = isDisabled || isActive ? -1 : tabIndex;
+
+      const handleAnchorClick: React.MouseEventHandler = (e) => {
+        if (isDisabled || isActive) {
+          e.preventDefault();
+          return;
+        }
+        onClick?.();
+      };
+
+      return (
+        <LinkComponent
+          key={page}
+          href={href}
+          aria-label={ariaLabel}
+          onClick={handleAnchorClick}
+          tabIndex={effectiveTabIndex}
+          className={className}
+          aria-disabled={isDisabled || isActive}
+          aria-current={isActive ? "page" : undefined}
+        >
+          {page}
+        </LinkComponent>
+      );
+    };
+
     return (
-      <nav
+      <Pagination
         ref={ref}
-        className={paginationVariants({}) + (className ? ` ${className}` : "")}
-        role="navigation"
-        aria-label="Pagination"
+        totalPages={totalPages}
+        activePage={activeCurrentPage}
+        pageNumbers={pageNumbers}
+        hasPrev={hasPrev}
+        hasNext={hasNext}
+        shape={shape}
+        variant={variant}
+        color={color}
+        className={className}
+        renderPage={renderPage}
+        renderControl={renderControl}
+        handlePageChange={handlePageChange}
+        customIcons={customIcons}
         {...rest}
-      >
-        {showFirstLast && (
-          <LinkComponent
-            href={getPageHref(clamped(1))}
-            className={paginationButtonVariants({ size: "md", shape, variant, color })}
-            aria-label="Go to first page"
-            aria-disabled={!hasPrev}
-            disabled={!hasPrev}
-            onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
-              !hasPrev && e.preventDefault()
-            }
-            tabIndex={!hasPrev ? -1 : undefined}
-          >
-            <Icon icon={icons.first} size="md" />
-          </LinkComponent>
-        )}
-        {showPrevNext && (
-          <LinkComponent
-            href={getPageHref(clamped(activeCurrentPage - 1))}
-            className={paginationButtonVariants({ size: "md", shape, variant, color })}
-            aria-label="Go to previous page"
-            aria-disabled={!hasPrev}
-            disabled={!hasPrev}
-            onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
-              !hasPrev && e.preventDefault()
-            }
-            tabIndex={!hasPrev ? -1 : undefined}
-          >
-            <Icon icon={icons.previous} size="sm" />
-          </LinkComponent>
-        )}
-        {pageNumbers.map((page, idx) =>
-          page === "ellipsis" ? (
-            <div
-              key={`ellipsis-${idx}`}
-              className={paginationEllipsisVariants()}
-              aria-hidden="true"
-            >
-              …
-            </div>
-          ) : (
-            <LinkComponent
-              key={page}
-              href={getPageHref(clamped(page as number))}
-              className={paginationButtonVariants({
-                size: "md",
-                shape,
-                variant,
-                color,
-                active: page === activeCurrentPage,
-              })}
-              aria-current={page === activeCurrentPage ? "page" : undefined}
-              onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
-                page === activeCurrentPage && e.preventDefault()
-              }
-              aria-label={`Go to page ${page}`}
-              aria-disabled={page === activeCurrentPage}
-              tabIndex={page === activeCurrentPage ? -1 : undefined}
-            >
-              {page}
-            </LinkComponent>
-          ),
-        )}
-        {showPrevNext && (
-          <LinkComponent
-            href={getPageHref(clamped(activeCurrentPage + 1))}
-            className={paginationButtonVariants({ size: "md", shape, variant, color })}
-            aria-label="Go to next page"
-            aria-disabled={!hasNext}
-            disabled={!hasNext}
-            onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
-              !hasNext && e.preventDefault()
-            }
-            tabIndex={!hasNext ? -1 : undefined}
-          >
-            <Icon icon={icons.next} size="sm" />
-          </LinkComponent>
-        )}
-        {showFirstLast && (
-          <LinkComponent
-            href={getPageHref(clamped(totalPages))}
-            className={paginationButtonVariants({ size: "md", shape, variant, color })}
-            aria-label="Go to last page"
-            aria-disabled={!hasNext}
-            disabled={!hasNext}
-            onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) =>
-              !hasNext && e.preventDefault()
-            }
-            tabIndex={!hasNext ? -1 : undefined}
-          >
-            <Icon icon={icons.last} size="md" />
-          </LinkComponent>
-        )}
-      </nav>
+      />
     );
   },
 );

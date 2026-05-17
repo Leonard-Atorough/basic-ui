@@ -48,7 +48,9 @@ export const LinkPagination = React.forwardRef<HTMLElement, LinkPaginationProps>
     },
     ref,
   ) => {
-    const activeCurrentPage = currentPage || 1;
+    const clamped = (p: number) => Math.max(1, Math.min(p, totalPages));
+
+    const activeCurrentPage = clamped(currentPage || 1);
     // Prefer explicit pageCount, else compute
     const totalPages =
       pageCount ?? (totalItems && itemsPerPage ? Math.ceil(totalItems / itemsPerPage) : 1);
@@ -56,7 +58,7 @@ export const LinkPagination = React.forwardRef<HTMLElement, LinkPaginationProps>
       () => calculatePaginationState(totalPages, 1, activeCurrentPage),
       [totalPages, activeCurrentPage],
     );
-    const clamped = (p: number) => Math.max(1, Math.min(p, totalPages));
+
     const pageNumbers = useMemo(
       () =>
         generatePageNumbers(activeCurrentPage, totalPages, maxSiblingButtons, maxBoundaryButtons),

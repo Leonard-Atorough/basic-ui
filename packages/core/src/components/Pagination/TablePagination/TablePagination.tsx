@@ -118,6 +118,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
             disabled={!hasPrev}
             className={paginationButtonVariants({ size: "md", shape, variant, color })}
             aria-label="Go to first page"
+            type="button"
           >
             <Icon icon={icons.first} size="md" />
           </button>
@@ -128,6 +129,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
             disabled={!hasPrev}
             className={paginationButtonVariants({ size: "md", shape, variant, color })}
             aria-label="Go to previous page"
+            type="button"
           >
             <Icon icon={icons.previous} size="sm" />
           </button>
@@ -154,6 +156,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
               })}
               aria-current={page === activeCurrentPage ? "page" : undefined}
               aria-label={`Go to page ${page}`}
+              type="button"
             >
               {page}
             </button>
@@ -165,6 +168,8 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
             disabled={!hasNext}
             className={paginationButtonVariants({ size: "md", shape, variant, color })}
             aria-label="Go to next page"
+            type="button"
+            
           >
             <Icon icon={icons.next} size="sm" />
           </button>
@@ -175,6 +180,7 @@ export const TablePagination = React.forwardRef<HTMLElement, TablePaginationProp
             disabled={!hasNext}
             className={paginationButtonVariants({ size: "md", shape, variant, color })}
             aria-label="Go to last page"
+            type="button"
           >
             <Icon icon={icons.last} size="md" />
           </button>

@@ -10,7 +10,7 @@ const _Text = <As extends AllowedTextElements = "p">(
     as,
     size = "md",
     weight = "normal",
-    color = "inherit",
+    color = "default",
     align = "left",
     truncate = false,
     wrap = "nowrap",

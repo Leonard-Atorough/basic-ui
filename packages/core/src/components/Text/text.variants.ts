@@ -8,6 +8,8 @@ export const textVariants = cva("font-sans", {
       md: "text-md",
       lg: "text-lg",
       xl: "text-xl",
+      "2xl": "text-2xl",
+      "3xl": "text-3xl",
     },
     weight: {
       normal: "font-normal",
@@ -16,7 +18,6 @@ export const textVariants = cva("font-sans", {
       bold: "font-bold",
     },
     color: {
-      inherit: "text-inherit",
       default: "text-foreground-primary",
       muted: "text-foreground-muted",
       primary: "text-primary-500",
@@ -46,7 +47,6 @@ export const textVariants = cva("font-sans", {
   defaultVariants: {
     size: "md",
     weight: "normal",
-    color: "inherit",
     align: "left",
     truncate: false,
     wrap: "nowrap",

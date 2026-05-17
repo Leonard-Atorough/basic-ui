@@ -4,7 +4,6 @@ import { CommonProps, RestrictedPropsWithAs } from "@core/types/props";
 export type AllowedTextElements = "span" | "p" | "div";
 
 export type builtInColorUnion =
-  | "inherit"
   | "default"
   | "muted"
   | "primary"
@@ -16,7 +15,7 @@ export type builtInColorUnion =
 
 interface TextOwnProps extends CommonProps {
   /** Size of the text. @default "md" */
-  size?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl">;
+  size?: ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl">;
   /** Font weight. @default "normal" */
   weight?: ResponsiveValue<"normal" | "medium" | "semibold" | "bold">;
   /** Text color. @default "inherit" */

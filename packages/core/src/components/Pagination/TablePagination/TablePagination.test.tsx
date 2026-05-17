@@ -35,7 +35,7 @@ describe("TablePagination", () => {
     expect(screen.getByLabelText("Go to page 4")).toHaveAttribute("aria-current", "page");
   });
 
-  it("sets initial page to 1 if currentPage is invalid and intialPage is not provided", () => {
+  it("sets initial page to 1 if currentPage is invalid and initialPage is not provided", () => {
     renderWithProviders(<TablePagination pageCount={5} currentPage={-1} />);
     expect(screen.getByLabelText("Go to page 1")).toHaveAttribute("aria-current", "page");
   });

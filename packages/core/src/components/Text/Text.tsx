@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@core/lib";
+import { cn, isBuiltInTextColor, normalizeProps } from "@core/lib";
 import type { AllowedTextElements, TextProps, builtInColorUnion } from "./text.types";
 import { textVariants } from "./text.variants";
 import { PolymorphicRef } from "@core/types/props";
@@ -29,18 +29,7 @@ const _Text = <As extends AllowedTextElements = "p">(
   const resolvedWrap = useResponsive(wrap);
   const resolvedColor = useResponsive(color) as builtInColorUnion | string;
 
-  const isBuiltInColor = (
-    [
-      "default",
-      "muted",
-      "primary",
-      "secondary",
-      "error",
-      "success",
-      "warning",
-      "info",
-    ] as builtInColorUnion[]
-  ).includes(resolvedColor as builtInColorUnion);
+  const isBuiltInColor = isBuiltInTextColor(resolvedColor);
 
   const resolvedStyles = cn(
     textVariants({
@@ -61,9 +50,12 @@ const _Text = <As extends AllowedTextElements = "p">(
   // a `title` or `aria-label`, expose the full text to assistive tech via both
   // `title` (hover) and `aria-label` (screen readers) when `children` is a string.
   const accessibilityProps: Record<string, unknown> = {};
-  const restAny = rest as Record<string, unknown>;
+
+  // Normalize props (non-mutating)
+  const restAny = normalizeProps(rest as Record<string, unknown>);
+
   const hasTitle = restAny.title !== undefined;
-  const hasAriaLabel = restAny["aria-label"] !== undefined || restAny.ariaLabel !== undefined;
+  const hasAriaLabel = restAny["aria-label"] !== undefined;
 
   if (resolvedTruncate && !hasTitle && !hasAriaLabel && typeof children === "string") {
     accessibilityProps.title = children;
@@ -71,10 +63,7 @@ const _Text = <As extends AllowedTextElements = "p">(
   }
 
   return (
-    //@ts-expect-error Polymorphic component with dynamic element type can be tricky to type perfectly, but the core props should work correctly
-    // The type safety is enforced by the function signature (PolymorphicRef<As>)
-    // and the fact that 'as' determines the actual DOM element. We'll test it to ensure it behaves as expected.
-    <Comp ref={ref} className={resolvedStyles} {...accessibilityProps} {...rest}>
+    <Comp ref={ref} className={resolvedStyles} {...accessibilityProps} {...(restAny as any)}>
       {children}
     </Comp>
   );

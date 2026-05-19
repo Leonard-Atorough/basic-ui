@@ -12,7 +12,7 @@ interface HeaderOwnProps extends CommonProps {
   align?: ResponsiveValue<"left" | "center" | "right">;
   /** Truncate the text. @default false */
   truncate?: ResponsiveValue<boolean>;
-  /** Text wrapping behavior. @default "wrap" */
+  /** Text wrapping behavior. @default "nowrap" */
   wrap?: ResponsiveValue<"wrap" | "nowrap" | "pretty" | "balance">;
 }
 

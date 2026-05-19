@@ -1,5 +1,18 @@
 # @basic-ui/core
 
+## 0.2.0
+
+### Minor Changes
+
+- ce32fac: [core/header] Add new Header component (polymorphic as prop) with responsive size, weight, color, align, truncate, and wrap variants; accessibility improvements (auto title / aria-label when truncated); includes Storybook stories and unit tests.
+
+  [core/lib] Export BUILT_IN_HEADER_COLORS, isBuiltInHeaderColor, and BuiltInHeaderColor type to support header colors.
+
+### Patch Changes
+
+- Updated dependencies [ce32fac]
+  - @basic-ui/tokens@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes

@@ -39,7 +39,7 @@ export const headerVariants = cva("font-sans font-normal leading-tight", {
     },
   },
   defaultVariants: {
-    size: "h1",
+    size: "h2",
     weight: "normal",
     color: "default",
     align: "left",

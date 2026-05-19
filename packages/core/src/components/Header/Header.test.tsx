@@ -1,3 +1,4 @@
+import React from "react";
 import { describe, expect, it } from "vitest";
 import { headerVariants } from "./header.variants";
 import { Header } from "./Header";
@@ -130,6 +131,37 @@ describe("element type", () => {
   });
 });
 
+describe("ref forwarding", () => {
+  it("forwards ref to h1 by default", () => {
+    const ref = React.createRef<HTMLHeadingElement>();
+    renderWithProviders(<Header ref={ref}>Test</Header>);
+    expect(ref.current).toBeInTheDocument();
+    expect(ref.current?.tagName).toBe("H1");
+  });
+
+  it("forwards ref to h2 when as='h2'", () => {
+    const ref = React.createRef<HTMLHeadingElement>();
+    renderWithProviders(
+      <Header as="h2" ref={ref}>
+        Test
+      </Header>,
+    );
+    expect(ref.current).toBeInTheDocument();
+    expect(ref.current?.tagName).toBe("H2");
+  });
+
+  it("passes element-specific native props correctly", () => {
+    const { container } = renderWithProviders(
+      <Header as="h2" id="header-para" data-testid="header-element">
+        Paragraph header
+      </Header>,
+    );
+    const el = container.firstChild;
+    expect(el).toHaveAttribute("id", "header-para");
+    expect(el).toHaveAttribute("data-testid", "header-element");
+  });
+});
+
 describe("accessibility", () => {
   it("should pass an axe accessibility audit", async () => {
     const { container } = renderWithProviders(
@@ -139,5 +171,22 @@ describe("accessibility", () => {
     );
     const result = await axe(container);
     expect(result).toHaveNoViolations();
+  });
+
+  it("should auto-add title and aria-label when truncate is true and no label is provided", () => {
+    const { getByText } = renderWithProviders(<Header truncate>Truncated Header</Header>);
+    const el = getByText("Truncated Header");
+    expect(el).toHaveAttribute("title", "Truncated Header");
+    expect(el).toHaveAttribute("aria-label", "Truncated Header");
+  });
+
+  it("should respect provided title when truncate is true", () => {
+    const { getByText } = renderWithProviders(
+      <Header truncate title="Full header">
+        Truncated Header
+      </Header>,
+    );
+    const el = getByText("Truncated Header");
+    expect(el).toHaveAttribute("title", "Full header");
   });
 });

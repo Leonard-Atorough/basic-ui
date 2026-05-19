@@ -107,3 +107,60 @@ export const CombinedVariants: Story = {
     </div>
   ),
 };
+
+export const Playground: Story = {
+  args: {
+    as: "h2",
+    size: "h2",
+    weight: "normal",
+    color: "default",
+    align: "left",
+    truncate: false,
+    wrap: "nowrap",
+    children: "Editable Header",
+  },
+  render: (args) => <Header {...args}>{args.children}</Header>,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Playground: interactive controls for `Header`. Note: when `truncate` is true and no `title` or `aria-label` is provided, the component will automatically add a `title` and `aria-label` with the header text for accessibility. Colors accept built-in tokens (`default`, `primary`, `secondary`) or custom classes like `text-red-500`.",
+      },
+    },
+  },
+};
+
+export const Clickable: Story = {
+  render: () => (
+    <div className="flex flex-col gap-md">
+      <Header as="h2">
+        <a
+          href="#"
+          onClick={(e) => e.preventDefault()}
+          className="no-underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500"
+        >
+          Clickable header — link
+        </a>
+      </Header>
+
+      <Header as="h3">
+        <button
+          onClick={() => {}}
+          aria-expanded={false}
+          aria-controls="panel"
+          className="bg-transparent border-0 p-0 text-left focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500"
+        >
+          Clickable header — button (aria-expanded example)
+        </button>
+      </Header>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'When making headers interactive, place a semantic interactive element (`<a>` or `<button>`) inside the heading and ensure a visible focus indicator plus appropriate ARIA (e.g., `aria-expanded`). Avoid making the heading the interactive element itself.',
+      },
+    },
+  },
+};

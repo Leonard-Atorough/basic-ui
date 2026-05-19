@@ -8,12 +8,12 @@ import React from "react";
 const _Header = <As extends AllowedHeaderElements = "h1">(
   {
     as,
-    size = "h1",
+    size = "h2",
     weight = "normal",
     color = "default",
     align = "left",
     truncate = false,
-    wrap = "wrap",
+    wrap = "nowrap",
     children,
     className,
     ...rest
@@ -44,10 +44,24 @@ const _Header = <As extends AllowedHeaderElements = "h1">(
     `${className} ${!isBuiltInColor && resolvedColor ? resolvedColor : ""}`,
   );
 
+  // Accessibility: if header is visually truncated and the consumer didn't provide
+  // a `title` or `aria-label`, expose the full text to assistive tech via both
+  // `title` (hover) and `aria-label` (screen readers) when `children` is a string.
+  const accessibilityProps: Record<string, unknown> = {};
+
+  // Normalize props (non-mutating)
   const restAny = normalizeProps(rest as Record<string, unknown>);
 
+  const hasTitle = restAny.title !== undefined;
+  const hasAriaLabel = restAny["aria-label"] !== undefined;
+
+  if (resolvedTruncate && !hasTitle && !hasAriaLabel && typeof children === "string") {
+    accessibilityProps.title = children;
+    accessibilityProps["aria-label"] = children;
+  }
+
   return (
-    <Comp ref={ref} className={resolvedStyles} {...(restAny as any)}>
+    <Comp ref={ref} className={resolvedStyles} {...accessibilityProps} {...(restAny as any)}>
       {children}
     </Comp>
   );

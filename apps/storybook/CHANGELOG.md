@@ -1,5 +1,14 @@
 # @basic-ui/storybook
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [ce32fac]
+- Updated dependencies [ce32fac]
+  - @basic-ui/core@0.2.0
+  - @basic-ui/tokens@0.2.0
+
 ## 0.0.2
 
 ### Patch Changes
